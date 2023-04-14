@@ -6,6 +6,19 @@ definitions:
       status:
         type: boolean
     type: object
+  moviecontroller.StoreJson:
+    properties:
+      description:
+        type: string
+      duration:
+        type: integer
+      genres:
+        type: string
+      title:
+        type: string
+      url:
+        type: string
+    type: object
   usercontroller.LoginRequestJson:
     properties:
       password:
@@ -69,6 +82,114 @@ paths:
       summary: login
       tags:
       - Account
+  /movies:
+    get:
+      consumes:
+      - application/json
+      description: Movie service
+      parameters:
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: limit
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Global-Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Global-Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Global-Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Global-Response'
+      summary: Movie
+      tags:
+      - Movies
+    post:
+      consumes:
+      - application/json
+      description: Movie service
+      parameters:
+      - description: body
+        in: body
+        name: raw
+        required: true
+        schema:
+          $ref: '#/definitions/moviecontroller.StoreJson'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Global-Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Global-Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Global-Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Global-Response'
+      summary: Movie
+      tags:
+      - Movies
+  /movies/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Movie service
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: body
+        in: body
+        name: raw
+        required: true
+        schema:
+          $ref: '#/definitions/moviecontroller.StoreJson'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Global-Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Global-Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Global-Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Global-Response'
+      summary: Movie
+      tags:
+      - Movies
   /register:
     post:
       consumes:

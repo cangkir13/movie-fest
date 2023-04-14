@@ -1,0 +1,111 @@
+definitions:
+  Global-Response:
+    properties:
+      message: {}
+      result: {}
+      status:
+        type: boolean
+    type: object
+  usercontroller.LoginRequestJson:
+    properties:
+      password:
+        example: edp
+        type: string
+      username:
+        example: edp
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  usercontroller.RegisterRequestJson:
+    properties:
+      password:
+        example: edp
+        type: string
+      username:
+        example: edp
+        type: string
+    required:
+    - password
+    - username
+    type: object
+info:
+  contact: {}
+  title: Service message docs
+  version: 1.0.0
+paths:
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: login service account
+      parameters:
+      - description: body
+        in: body
+        name: raw
+        required: true
+        schema:
+          $ref: '#/definitions/usercontroller.LoginRequestJson'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Global-Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Global-Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Global-Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Global-Response'
+      summary: login
+      tags:
+      - Account
+  /register:
+    post:
+      consumes:
+      - application/json
+      description: register
+      parameters:
+      - description: body
+        in: body
+        name: raw
+        required: true
+        schema:
+          $ref: '#/definitions/usercontroller.RegisterRequestJson'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Global-Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Global-Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Global-Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Global-Response'
+      summary: register
+      tags:
+      - Account
+securityDefinitions:
+  Bearer:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

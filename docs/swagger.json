@@ -1,0 +1,167 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Service message docs",
+        "contact": {},
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/login": {
+            "post": {
+                "description": "login service account",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Account"
+                ],
+                "summary": "login",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "raw",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/usercontroller.LoginRequestJson"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Global-Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/Global-Response"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/Global-Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/Global-Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/register": {
+            "post": {
+                "description": "register",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Account"
+                ],
+                "summary": "register",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "raw",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/usercontroller.RegisterRequestJson"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Global-Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/Global-Response"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/Global-Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/Global-Response"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Global-Response": {
+            "type": "object",
+            "properties": {
+                "message": {},
+                "result": {},
+                "status": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "usercontroller.LoginRequestJson": {
+            "type": "object",
+            "required": [
+                "password",
+                "username"
+            ],
+            "properties": {
+                "password": {
+                    "type": "string",
+                    "example": "edp"
+                },
+                "username": {
+                    "type": "string",
+                    "example": "edp"
+                }
+            }
+        },
+        "usercontroller.RegisterRequestJson": {
+            "type": "object",
+            "required": [
+                "password",
+                "username"
+            ],
+            "properties": {
+                "password": {
+                    "type": "string",
+                    "example": "edp"
+                },
+                "username": {
+                    "type": "string",
+                    "example": "edp"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "Bearer": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
+}

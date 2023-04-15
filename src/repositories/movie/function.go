@@ -9,8 +9,12 @@ import (
 )
 
 type ListProps struct {
-	Page  int
-	Limit int
+	Page        int
+	Limit       int
+	Title       *string
+	Description *string
+	Artists     *string
+	Genres      *string
 }
 
 func (db *movieRepository) List(ctx context.Context, props ListProps) (records []*models.Movie, err error) {
@@ -21,8 +25,24 @@ func (db *movieRepository) List(ctx context.Context, props ListProps) (records [
 		query = query.Limit(props.Limit).Offset(offset)
 	}
 
+	if props.Title != nil {
+		query = query.Where("title LIKE ?", "%"+*props.Title+"%")
+	}
+
+	if props.Artists != nil {
+		query = query.Or("artists LIKE ?", "%"+*props.Artists+"%")
+	}
+
+	if props.Description != nil {
+		query = query.Or("description LIKE ?", "%"+*props.Description+"%")
+	}
+
+	if props.Genres != nil {
+		query = query.Or("genres LIKE ?", "%"+*props.Genres+"%")
+	}
+
 	// execute
-	if err = query.WithContext(ctx).Find(&records).Error; err != nil {
+	if err = query.WithContext(ctx).Debug().Find(&records).Error; err != nil {
 		return
 	}
 

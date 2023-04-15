@@ -93,6 +93,30 @@ const docTemplate = `{
                         "description": "limit",
                         "name": "limit",
                         "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "title",
+                        "name": "title",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "description",
+                        "name": "description",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "artists",
+                        "name": "artists",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "genres",
+                        "name": "genres",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -123,6 +147,11 @@ const docTemplate = `{
                 }
             },
             "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
                 "description": "Movie service",
                 "consumes": [
                     "application/json"
@@ -173,8 +202,127 @@ const docTemplate = `{
                 }
             }
         },
+        "/movies/unvote": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Unvote Movie service",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Movies-Vote"
+                ],
+                "summary": "Unvote Movie",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "raw",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/movievotecontroller.VoteRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Global-Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/Global-Response"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/Global-Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/Global-Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/movies/vote": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Vote Movie service",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Movies-Vote"
+                ],
+                "summary": "Vote movie",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "raw",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/movievotecontroller.VoteRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Global-Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/Global-Response"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/Global-Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/Global-Response"
+                        }
+                    }
+                }
+            }
+        },
         "/movies/{id}": {
             "put": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
                 "description": "Movie service",
                 "consumes": [
                     "application/json"
@@ -299,6 +447,9 @@ const docTemplate = `{
         "moviecontroller.StoreJson": {
             "type": "object",
             "properties": {
+                "artists": {
+                    "type": "string"
+                },
                 "description": {
                     "type": "string"
                 },
@@ -313,6 +464,14 @@ const docTemplate = `{
                 },
                 "url": {
                     "type": "string"
+                }
+            }
+        },
+        "movievotecontroller.VoteRequest": {
+            "type": "object",
+            "properties": {
+                "id_movie": {
+                    "type": "integer"
                 }
             }
         },

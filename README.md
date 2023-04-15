@@ -6,10 +6,17 @@
 go install
 ```
 
+## Database
+
+1. create db
+2. insert table schema in file -> database/db-schemas
+3. insert dummy data user as admin/user -> database/db_movies-user
+4. insert dummy data list movies -> database/db_movies-movies
+
 ## update environment
 
 ```sh
-cp .env-exm
+cp .env-exm .env
 ```
 
 ## running application

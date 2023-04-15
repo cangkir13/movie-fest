@@ -8,6 +8,8 @@ definitions:
     type: object
   moviecontroller.StoreJson:
     properties:
+      artists:
+        type: string
       description:
         type: string
       duration:
@@ -18,6 +20,11 @@ definitions:
         type: string
       url:
         type: string
+    type: object
+  movievotecontroller.VoteRequest:
+    properties:
+      id_movie:
+        type: integer
     type: object
   usercontroller.LoginRequestJson:
     properties:
@@ -96,6 +103,22 @@ paths:
         in: query
         name: limit
         type: integer
+      - description: title
+        in: query
+        name: title
+        type: string
+      - description: description
+        in: query
+        name: description
+        type: string
+      - description: artists
+        in: query
+        name: artists
+        type: string
+      - description: genres
+        in: query
+        name: genres
+        type: string
       produces:
       - application/json
       responses:
@@ -148,6 +171,8 @@ paths:
           description: Not Found
           schema:
             $ref: '#/definitions/Global-Response'
+      security:
+      - Bearer: []
       summary: Movie
       tags:
       - Movies
@@ -187,9 +212,83 @@ paths:
           description: Not Found
           schema:
             $ref: '#/definitions/Global-Response'
+      security:
+      - Bearer: []
       summary: Movie
       tags:
       - Movies
+  /movies/unvote:
+    post:
+      consumes:
+      - application/json
+      description: Unvote Movie service
+      parameters:
+      - description: body
+        in: body
+        name: raw
+        required: true
+        schema:
+          $ref: '#/definitions/movievotecontroller.VoteRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Global-Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Global-Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Global-Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Global-Response'
+      security:
+      - Bearer: []
+      summary: Unvote Movie
+      tags:
+      - Movies-Vote
+  /movies/vote:
+    post:
+      consumes:
+      - application/json
+      description: Vote Movie service
+      parameters:
+      - description: body
+        in: body
+        name: raw
+        required: true
+        schema:
+          $ref: '#/definitions/movievotecontroller.VoteRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Global-Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Global-Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Global-Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Global-Response'
+      security:
+      - Bearer: []
+      summary: Vote movie
+      tags:
+      - Movies-Vote
   /register:
     post:
       consumes:

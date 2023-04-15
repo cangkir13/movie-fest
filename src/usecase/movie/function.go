@@ -9,8 +9,12 @@ import (
 )
 
 type GetListProps struct {
-	Page  int
-	Limit int
+	Page        int
+	Limit       int
+	Title       *string
+	Description *string
+	Artists     *string
+	Genres      *string
 }
 
 func (repo *movieUsecase) GetList(ctx context.Context, props GetListProps) (records []*models.Movie, err error) {
@@ -78,6 +82,11 @@ func (repo *movieUsecase) UpdateMovie(ctx context.Context, props UpdateMovieProp
 	if props.Data.UpdatedBy != 0 {
 		updateData.UpdatedBy = props.Data.UpdatedBy
 		fields = append(fields, "updated_by")
+	}
+
+	if props.Data.Artists != "" {
+		updateData.Artists = props.Data.Artists
+		fields = append(fields, "artists")
 	}
 
 	propsUpdate := movierepository.UpdateProps{

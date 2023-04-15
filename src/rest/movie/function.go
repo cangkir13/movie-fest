@@ -12,8 +12,12 @@ import (
 )
 
 type GetListMovieRequest struct {
-	Page  int `form:"page"`
-	Limit int `form:"limit"`
+	Page        int     `form:"page"`
+	Limit       int     `form:"limit"`
+	Title       *string `form:"title"`
+	Description *string `form:"description"`
+	Artists     *string `form:"artists"`
+	Genres      *string `form:"genres"`
 }
 
 // Movie
@@ -22,12 +26,16 @@ type GetListMovieRequest struct {
 // @Tags        Movies
 // @Accept      json
 // @Produce     json
-// @Param       page  query    int false "page"
-// @Param       limit query    int false "limit"
-// @Success     200   {object} helper.PublicResponse
-// @Failure     400   {object} helper.PublicResponse
-// @Failure     404   {object} helper.PublicResponse
-// @Failure     401   {object} helper.PublicResponse
+// @Param       page        query    int    false "page"
+// @Param       limit       query    int    false "limit"
+// @Param       title       query    string false "title"
+// @Param       description query    string false "description"
+// @Param       artists     query    string false "artists"
+// @Param       genres      query    string false "genres"
+// @Success     200         {object} helper.PublicResponse
+// @Failure     400         {object} helper.PublicResponse
+// @Failure     404         {object} helper.PublicResponse
+// @Failure     401         {object} helper.PublicResponse
 // @Router      /movies [GET]
 func (usecase *movieController) GetListMovie(c *gin.Context) {
 	var request GetListMovieRequest
@@ -46,6 +54,7 @@ func (usecase *movieController) GetListMovie(c *gin.Context) {
 
 type StoreJson struct {
 	Title       string `json:"title"`
+	Artists     string `json:"artists"`
 	Description string `json:"description"`
 	Duration    int    `json:"duration"`
 	Genres      string `json:"genres"`
@@ -58,6 +67,7 @@ type StoreJson struct {
 // @Tags        Movies
 // @Accept      json
 // @Produce     json
+// @Security    Bearer
 // @Param       raw body     StoreJson true "body"
 // @Success     200 {object} helper.PublicResponse
 // @Failure     400 {object} helper.PublicResponse
@@ -78,6 +88,7 @@ func (usecase *movieController) Store(c *gin.Context) {
 		Duration:    request.Duration,
 		Genres:      request.Genres,
 		Url:         request.Url,
+		Artists:     request.Artists,
 	})
 
 	if errinsert != nil {
@@ -104,6 +115,7 @@ type UpdateRequest struct {
 // @Tags        Movies
 // @Accept      json
 // @Produce     json
+// @Security    Bearer
 // @Param       id  path     int       true "ID"
 // @Param       raw body     StoreJson true "body"
 // @Success     200 {object} helper.PublicResponse

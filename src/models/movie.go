@@ -6,6 +6,7 @@ type Movie struct {
 	ID          int       `json:"id" gorm:"primaryKey:autoIncrement"`
 	Title       string    `json:"title"`
 	Description string    `json:"description"`
+	Artists     string    `json:"artists"`
 	Duration    int       `json:"duration"`
 	Genres      string    `json:"genres"`
 	Url         string    `json:"url"`
